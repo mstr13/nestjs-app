@@ -22,7 +22,7 @@ export class Station {
   @Column()
   stationId: number;
 
-  @Column({ default: true })
+  @Column({ default: false })
   isCharging: boolean;
 
   @ManyToOne(() => Company, { nullable: false })
