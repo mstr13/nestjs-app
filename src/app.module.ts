@@ -16,6 +16,7 @@ const config: SqliteConnectionOptions = {
   entities: [Company, Station, Stationtype],
   synchronize: true,
 };
+
 @Module({
   imports: [
     CompaniesModule,

@@ -1,9 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Stationtype } from './entities/stationtype.entity';
 import { CreateStationtypeDto } from './dto/create-stationtype.dto';
 import { UpdateStationtypeDto } from './dto/update-stationtype.dto';
 
 @Injectable()
 export class StationtypesService {
+  constructor(
+    @InjectRepository(Stationtype)
+    private stationTypeRepository: Repository<Stationtype>,
+  ) {}
+
   create(createStationtypeDto: CreateStationtypeDto) {
     return 'This action adds a new stationtype';
   }
