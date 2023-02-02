@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  Logger,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -15,28 +18,75 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
+  private readonly logger = new Logger(CompaniesController.name);
+
   @Post()
-  create(@Body() createCompanyDto: CreateCompanyDto) {
-    return this.companiesService.create(createCompanyDto);
+  async create(@Body() createCompanyDto: CreateCompanyDto) {
+    try {
+      const result = await this.companiesService.create(createCompanyDto);
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get()
-  findAll() {
-    return this.companiesService.findAll();
+  async findAll() {
+    try {
+      const result = await this.companiesService.findAll();
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.companiesService.findOne(+id);
+  async findOne(@Param('id') id: number) {
+    try {
+      const result = await this.companiesService.findOne(+id);
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateCompanyDto: UpdateCompanyDto) {
-    return this.companiesService.update(+id, updateCompanyDto);
+  async update(@Param('id') id: number, @Body() updateCompanyDto: UpdateCompanyDto) {
+    try {
+      const result = await this.companiesService.update(+id, updateCompanyDto);
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.companiesService.remove(+id);
+  async remove(@Param('id') id: number) {
+    try {
+      const result = await this.companiesService.remove(id);
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

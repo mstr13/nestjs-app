@@ -12,23 +12,23 @@ export class StationtypesService {
     private stationTypeRepository: Repository<Stationtype>,
   ) {}
 
-  create(createStationtypeDto: CreateStationtypeDto) {
-    return 'This action adds a new stationtype';
+  async create(createStationtypeDto: CreateStationtypeDto) {
+    return await this.stationTypeRepository.save(createStationtypeDto);
   }
 
-  findAll() {
-    return `This action returns all stationtypes`;
+  async findAll() {
+    return await this.stationTypeRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} stationtype`;
+  async findOne(id: number) {
+    return await this.stationTypeRepository.findOneBy({ id: id });
   }
 
-  update(id: number, updateStationtypeDto: UpdateStationtypeDto) {
-    return `This action updates a #${id} stationtype`;
+  async update(id: number, updateStationtypeDto: UpdateStationtypeDto) {
+    return await this.stationTypeRepository.update(id, updateStationtypeDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} stationtype`;
+  async remove(id: number) {
+    return await this.stationTypeRepository.delete(id);
   }
 }

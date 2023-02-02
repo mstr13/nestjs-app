@@ -12,23 +12,23 @@ export class StationsService {
     private stationRepository: Repository<Station>,
   ) {}
 
-  create(createStationDto: CreateStationDto) {
-    return 'This action adds a new station';
+  async create(createStationDto: CreateStationDto) {
+    return await this.stationRepository.save(createStationDto);
   }
 
-  findAll() {
-    return `This action returns all stations`;
+  async findAll() {
+    return await this.stationRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} station`;
+  async findOne(id: number) {
+    return await this.stationRepository.findOneBy({ id: id });
   }
 
-  update(id: number, updateStationDto: UpdateStationDto) {
-    return `This action updates a #${id} station`;
+  async update(id: number, updateStationDto: UpdateStationDto) {
+    return await this.stationRepository.update(id, updateStationDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} station`;
+  async remove(id: number) {
+    return await this.stationRepository.delete(id);
   }
 }

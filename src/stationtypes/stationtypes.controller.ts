@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Logger,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { StationtypesService } from './stationtypes.service';
 import { CreateStationtypeDto } from './dto/create-stationtype.dto';
 import { UpdateStationtypeDto } from './dto/update-stationtype.dto';
@@ -7,28 +18,80 @@ import { UpdateStationtypeDto } from './dto/update-stationtype.dto';
 export class StationtypesController {
   constructor(private readonly stationtypesService: StationtypesService) {}
 
+  private readonly logger = new Logger(StationtypesController.name);
+
   @Post()
-  create(@Body() createStationtypeDto: CreateStationtypeDto) {
-    return this.stationtypesService.create(createStationtypeDto);
+  async create(@Body() createStationtypeDto: CreateStationtypeDto) {
+    try {
+      const result = await this.stationtypesService.create(
+        createStationtypeDto,
+      );
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get()
-  findAll() {
-    return this.stationtypesService.findAll();
+  async findAll() {
+    try {
+      const result = await this.stationtypesService.findAll();
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.stationtypesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    try {
+      const result = await this.stationtypesService.findOne(+id);
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStationtypeDto: UpdateStationtypeDto) {
-    return this.stationtypesService.update(+id, updateStationtypeDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateStationtypeDto: UpdateStationtypeDto,
+  ) {
+    try {
+      const result = await this.stationtypesService.update(+id, updateStationtypeDto);
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.stationtypesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    try {
+      const result = await this.stationtypesService.remove(+id);
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
