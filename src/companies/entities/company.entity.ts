@@ -14,10 +14,10 @@ export class Company {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   parentId: number;
 
-  @ManyToOne(() => Company)
+  @ManyToOne(() => Company, { nullable: true })
   @JoinColumn({ name: 'parentId' })
   parent: Company;
 }
