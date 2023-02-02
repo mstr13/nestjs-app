@@ -12,7 +12,7 @@ import { Stationtype } from './stationtypes/entities/stationtype.entity';
 
 const config: SqliteConnectionOptions = {
   type: 'sqlite',
-  database: '../db',
+  database: 'db',
   entities: [Company, Station, Stationtype],
   synchronize: true,
 };
