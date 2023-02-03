@@ -20,6 +20,20 @@ export class CompaniesService {
     return await this.companyRepository.find();
   }
 
+  async findStations(id: number) {
+    return await this.companyRepository.query(
+      `WITH RECURSIVE childs(id) AS (
+        VALUES(?) 
+        UNION 
+        SELECT company.id FROM company, childs WHERE company.parentId=childs.id
+      )
+      SELECT s.id, s.name, t.maxPower 
+      FROM (station s left join company c on c.id=s.companyId) left join stationtype t on t.id=s.stationTypeId 
+      WHERE c.id IN childs`,
+      [id],
+    );
+  }
+
   async findOne(id: number) {
     return await this.companyRepository.findOneBy({ id: id });
   }

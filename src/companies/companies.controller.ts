@@ -48,6 +48,20 @@ export class CompaniesController {
     }
   }
 
+  @Get(':id/stations')
+  async findStations(@Param('id') id: number) {
+    try {
+      const result = await this.companiesService.findStations(+id);
+      return result;
+    } catch (error) {
+      this.logger.log(error.message);
+      throw new HttpException(
+        'Internal Server Error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: number) {
     try {
@@ -63,7 +77,10 @@ export class CompaniesController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: number, @Body() updateCompanyDto: UpdateCompanyDto) {
+  async update(
+    @Param('id') id: number,
+    @Body() updateCompanyDto: UpdateCompanyDto,
+  ) {
     try {
       const result = await this.companiesService.update(+id, updateCompanyDto);
       return result;
