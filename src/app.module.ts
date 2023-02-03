@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { CompaniesModule } from './companies/companies.module';
 import { StationsModule } from './stations/stations.module';
 import { StationtypesModule } from './stationtypes/stationtypes.module';
+import { CommandsModule } from './commands/commands.module';
 import { Company } from './companies/entities/company.entity';
 import { Station } from './stations/entities/station.entity';
 import { Stationtype } from './stationtypes/entities/stationtype.entity';
@@ -22,6 +23,7 @@ const config: SqliteConnectionOptions = {
     CompaniesModule,
     StationsModule,
     StationtypesModule,
+    CommandsModule,
     TypeOrmModule.forRoot(config),
   ],
   controllers: [AppController],
