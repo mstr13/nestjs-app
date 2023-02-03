@@ -21,7 +21,7 @@ export class CreateStationDto {
   @ApiProperty()
   @IsInt()
   @IsNotEmpty()
-  stationId: number;
+  stationTypeId: number;
 
   @ApiProperty()
   @IsBoolean()

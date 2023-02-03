@@ -20,7 +20,7 @@ export class Station {
   companyId: number;
 
   @Column()
-  stationId: number;
+  stationTypeId: number;
 
   @Column({ default: false })
   isCharging: boolean;
@@ -30,6 +30,6 @@ export class Station {
   company: Company;
 
   @ManyToOne(() => Stationtype, { nullable: false })
-  @JoinColumn({ name: 'stationId' })
-  station: Stationtype;
+  @JoinColumn({ name: 'stationTypeId' })
+  stationType: Stationtype;
 }
