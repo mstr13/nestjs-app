@@ -20,10 +20,12 @@ export class CommandsController {
     try {
       if (req.readable) {
         const raw = await rawbody(req);
-        const text = raw.toString().trim();
-        this.logger.log(text);
-        const result = await this.commandsService.stopStationsAll();
-        return result;
+        const cmds = await this.commandsService.validateBody(raw);
+        //process commands
+        for (let i = 0; i <= cmds.length - 1; i++) {
+          
+        }
+        return {};
       } else {
         this.logger.log('Plain text raw body not found in request');
         throw new HttpException(
