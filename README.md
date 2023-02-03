@@ -1,6 +1,6 @@
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+API for an automated charging station management system using NestJS, Typeorm and Sqlite.
 
 ## Installation
 
@@ -21,28 +21,24 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Api documentation
 
-```bash
-# unit tests
-$ npm run test
+The available endpoints and api documentation can be consulted [here](http://localhost:3000/api) or downloaded in json format [here](http://localhost:3000/api-json).
 
-# e2e tests
-$ npm run test:e2e
+Most of the endpoints are for general CRUD operations with the following exceptions:
 
-# test coverage
-$ npm run test:cov
-```
+- /companies/{id}/stations - takes a company id and responds with data (stationId,
+stationName, maxPower) about all stations that belong to the given company and its child companies.
+- /commands - script parser for controlling commnands according to Task 2.
 
-## Support
+## ToDo (Sorry for the lack of time)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- Process the commands and return the report according to Task 2.
+- Implement testing.
+- Improve API and code documentation.
+- Set return types on all methods.
+- Improve error handling
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
