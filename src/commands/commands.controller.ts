@@ -14,18 +14,15 @@ export class CommandsController {
   constructor(private readonly commandsService: CommandsService) {}
 
   private readonly logger = new Logger(CommandsController.name);
-
+  
   @Post()
   async execCommands(@Req() req) {
     try {
       if (req.readable) {
         const raw = await rawbody(req);
         const cmds = await this.commandsService.validateBody(raw);
-        //process commands
-        for (let i = 0; i <= cmds.length - 1; i++) {
-          
-        }
-        return {};
+        const result = await this.commandsService.processCommands(cmds);
+        return result;
       } else {
         this.logger.log('Plain text raw body not found in request');
         throw new HttpException(
