@@ -12,6 +12,7 @@ import {
 import { StationtypesService } from './stationtypes.service';
 import { CreateStationtypeDto } from './dto/create-stationtype.dto';
 import { UpdateStationtypeDto } from './dto/update-stationtype.dto';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('stationtypes')
 export class StationtypesController {
@@ -19,6 +20,9 @@ export class StationtypesController {
 
   private readonly logger = new Logger(StationtypesController.name);
 
+  @ApiOperation({
+    description: 'This Endpoint is used to create a new station type.',
+  })
   @Post()
   async create(@Body() createStationtypeDto: CreateStationtypeDto) {
     try {
@@ -35,6 +39,9 @@ export class StationtypesController {
     }
   }
 
+  @ApiOperation({
+    description: 'This Endpoint returns all station types.',
+  })
   @Get()
   async findAll() {
     try {
@@ -49,6 +56,10 @@ export class StationtypesController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint returns the station type that corresponds to the specified id.',
+  })
   @Get(':id')
   async findOne(@Param('id') id: number) {
     try {
@@ -63,6 +74,10 @@ export class StationtypesController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint updates the station type. Please only include the fields that you want to update.',
+  })
   @Patch(':id')
   async update(
     @Param('id') id: number,
@@ -83,6 +98,10 @@ export class StationtypesController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint deletes the station type that corresponds to the specified id.',
+  })
   @Delete(':id')
   async remove(@Param('id') id: number) {
     try {

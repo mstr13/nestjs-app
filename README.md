@@ -34,7 +34,6 @@ stationName, maxPower) about all stations that belong to the given company and i
 ## ToDo (Sorry for the lack of time)
 
 - Implement testing.
-- Improve API and code documentation.
 
 
 ## License

@@ -12,6 +12,7 @@ import {
 import { StationsService } from './stations.service';
 import { CreateStationDto } from './dto/create-station.dto';
 import { UpdateStationDto } from './dto/update-station.dto';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('stations')
 export class StationsController {
@@ -19,6 +20,9 @@ export class StationsController {
 
   private readonly logger = new Logger(StationsController.name);
 
+  @ApiOperation({
+    description: 'This Endpoint is used to create a new station.',
+  })
   @Post()
   async create(@Body() createStationDto: CreateStationDto) {
     try {
@@ -33,6 +37,9 @@ export class StationsController {
     }
   }
 
+  @ApiOperation({
+    description: 'This Endpoint returns all stations.',
+  })
   @Get()
   async findAll() {
     try {
@@ -47,6 +54,10 @@ export class StationsController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint returns the station that corresponds to the specified id.',
+  })
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
@@ -61,6 +72,10 @@ export class StationsController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint updates the station. Please only include the fields that you want to update.',
+  })
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -78,6 +93,10 @@ export class StationsController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint deletes the station that corresponds to the specified id.',
+  })
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {

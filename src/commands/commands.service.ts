@@ -38,6 +38,7 @@ export class CommandsService {
       .execute();
   }
 
+  //use recursive query to create a 'transitive closure table' ordered by companyId and stationId
   chargingReport(): Promise<TreeDataDto[]> {
     return this.stationRepository.query(
       `WITH RECURSIVE descendants(id, parentId, descendantId) AS (
@@ -48,10 +49,11 @@ export class CommandsService {
       SELECT d.id as companyId, s.id as stationId, t.maxPower 
       FROM (station s LEFT JOIN descendants d ON s.companyId = d.descendantId) LEFT JOIN stationtype t ON t.id=s.stationTypeId 
       WHERE s.isCharging = TRUE 
-      ORDER BY d.id`,
+      ORDER BY d.id, s.id`,
     );
   }
 
+  //validates that the raw body of the request has well formated commands
   validateBody(raw: Buffer): string[] {
     const text = raw.toString().trim();
     const cmds = text.split(/[\r\n]+/).map(function (item) {
@@ -77,6 +79,7 @@ export class CommandsService {
     return cmds;
   }
 
+  //generates the report data for each step
   step(data: TreeDataDto[]): StepDto {
     const step = {} as StepDto;
     step.step = '';
@@ -109,6 +112,7 @@ export class CommandsService {
     return step;
   }
 
+  //executes the commands and returns the report of the current state of the system step by step
   async processCommands(raw: Buffer): Promise<ReportDto> {
     const cmds = this.validateBody(raw);
     const begin = /Begin/;

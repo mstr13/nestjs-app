@@ -12,6 +12,7 @@ import {
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('companies')
 export class CompaniesController {
@@ -19,6 +20,9 @@ export class CompaniesController {
 
   private readonly logger = new Logger(CompaniesController.name);
 
+  @ApiOperation({
+    description: 'This Endpoint is used to create a new company.',
+  })
   @Post()
   async create(@Body() createCompanyDto: CreateCompanyDto) {
     try {
@@ -33,6 +37,9 @@ export class CompaniesController {
     }
   }
 
+  @ApiOperation({
+    description: 'This Endpoint returns all companies.',
+  })
   @Get()
   async findAll() {
     try {
@@ -47,6 +54,10 @@ export class CompaniesController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint returns all stations that belong to the given company (id) and its child companies.',
+  })
   @Get(':id/stations')
   async findStations(@Param('id') id: number) {
     try {
@@ -61,6 +72,10 @@ export class CompaniesController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint returns the company that corresponds to the specified id.',
+  })
   @Get(':id')
   async findOne(@Param('id') id: number) {
     try {
@@ -75,6 +90,10 @@ export class CompaniesController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint updates the company. Please only include the fields that you want to update.',
+  })
   @Patch(':id')
   async update(
     @Param('id') id: number,
@@ -92,6 +111,10 @@ export class CompaniesController {
     }
   }
 
+  @ApiOperation({
+    description:
+      'This Endpoint deletes the company that corresponds to the specified id.',
+  })
   @Delete(':id')
   async remove(@Param('id') id: number) {
     try {

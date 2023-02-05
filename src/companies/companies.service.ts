@@ -20,6 +20,7 @@ export class CompaniesService {
     return this.companyRepository.find();
   }
 
+  //uses recursive query to find all stations that belong to the given company (id) and its child companies
   findStations(id: number) {
     return this.companyRepository.query(
       `WITH RECURSIVE childs(id) AS (
