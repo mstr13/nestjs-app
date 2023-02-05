@@ -20,8 +20,7 @@ export class CommandsController {
     try {
       if (req.readable) {
         const raw = await rawbody(req);
-        const cmds = await this.commandsService.validateBody(raw);
-        const result = await this.commandsService.processCommands(cmds);
+        const result = await this.commandsService.processCommands(raw);
         return result;
       } else {
         this.logger.log('Plain text raw body not found in request');

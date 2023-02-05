@@ -52,7 +52,7 @@ export class CommandsService {
     );
   }
 
-  async validateBody(raw: Buffer): Promise<string[]>{
+  validateBody(raw: Buffer): string[] {
     const text = raw.toString().trim();
     const cmds = text.split(/[\r\n]+/).map(function (item) {
       return item.trim();
@@ -77,7 +77,7 @@ export class CommandsService {
     return cmds;
   }
 
-  async step(data: TreeDataDto[]): Promise<StepDto> {
+  step(data: TreeDataDto[]): StepDto {
     const step = {} as StepDto;
     step.step = '';
     step.timestamp = Date.now();
@@ -109,7 +109,8 @@ export class CommandsService {
     return step;
   }
 
-  async processCommands(cmds: string[]): Promise<ReportDto> {
+  async processCommands(raw: Buffer): Promise<ReportDto> {
+    const cmds = this.validateBody(raw);
     const begin = /Begin/;
     const end = /End/;
     const start = /Start station ([1-9][0-9]*|all)/;
@@ -119,12 +120,12 @@ export class CommandsService {
     for (let i = 0; i <= cmds.length - 1; i++) {
       if (begin.test(cmds[i])) {
         const result = await this.chargingReport();
-        const step = await this.step(result);
+        const step = this.step(result);
         step.step = cmds[i];
         report.data.push(step);
       } else if (end.test(cmds[i])) {
         const result = await this.chargingReport();
-        const step = await this.step(result);
+        const step = this.step(result);
         step.step = cmds[i];
         report.data.push(step);
       } else if (start.test(cmds[i])) {
@@ -136,7 +137,7 @@ export class CommandsService {
           await this.startStation(Number(arg));
         }
         const result = await this.chargingReport();
-        const step = await this.step(result);
+        const step = this.step(result);
         step.step = cmds[i];
         report.data.push(step);
       } else if (stop.test(cmds[i])) {
@@ -148,7 +149,7 @@ export class CommandsService {
           await this.stopStation(Number(arg));
         }
         const result = await this.chargingReport();
-        const step = await this.step(result);
+        const step = this.step(result);
         step.step = cmds[i];
         report.data.push(step);
       } else if (wait.test(cmds[i])) {

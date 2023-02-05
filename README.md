@@ -33,11 +33,8 @@ stationName, maxPower) about all stations that belong to the given company and i
 
 ## ToDo (Sorry for the lack of time)
 
-- Process the commands and return the report according to Task 2.
 - Implement testing.
 - Improve API and code documentation.
-- Set return types on all methods.
-- Improve error handling
 
 
 ## License
