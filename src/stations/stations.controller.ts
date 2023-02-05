@@ -7,8 +7,7 @@ import {
   Param,
   Delete,
   Logger,
-  HttpException,
-  HttpStatus,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { StationsService } from './stations.service';
 import { CreateStationDto } from './dto/create-station.dto';
@@ -27,10 +26,10 @@ export class StationsController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 
@@ -41,10 +40,10 @@ export class StationsController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 
@@ -55,24 +54,27 @@ export class StationsController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateStationDto: UpdateStationDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateStationDto: UpdateStationDto,
+  ) {
     try {
       const result = await this.stationsService.update(+id, updateStationDto);
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 
@@ -83,10 +85,10 @@ export class StationsController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 }

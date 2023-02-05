@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult, DeleteResult } from 'typeorm';
 import { Stationtype } from './entities/stationtype.entity';
 import { CreateStationtypeDto } from './dto/create-stationtype.dto';
 import { UpdateStationtypeDto } from './dto/update-stationtype.dto';
@@ -12,23 +12,28 @@ export class StationtypesService {
     private stationTypeRepository: Repository<Stationtype>,
   ) {}
 
-  async create(createStationtypeDto: CreateStationtypeDto) {
-    return await this.stationTypeRepository.save(createStationtypeDto);
+  create(
+    createStationtypeDto: CreateStationtypeDto,
+  ): Promise<CreateStationtypeDto> {
+    return this.stationTypeRepository.save(createStationtypeDto);
   }
 
-  async findAll() {
-    return await this.stationTypeRepository.find();
+  findAll(): Promise<Stationtype[]> {
+    return this.stationTypeRepository.find();
   }
 
-  async findOne(id: number) {
-    return await this.stationTypeRepository.findOneBy({ id: id });
+  findOne(id: number): Promise<Stationtype> {
+    return this.stationTypeRepository.findOneBy({ id: id });
   }
 
-  async update(id: number, updateStationtypeDto: UpdateStationtypeDto) {
-    return await this.stationTypeRepository.update(id, updateStationtypeDto);
+  update(
+    id: number,
+    updateStationtypeDto: UpdateStationtypeDto,
+  ): Promise<UpdateResult> {
+    return this.stationTypeRepository.update(id, updateStationtypeDto);
   }
 
-  async remove(id: number) {
-    return await this.stationTypeRepository.delete(id);
+  remove(id: number): Promise<DeleteResult> {
+    return this.stationTypeRepository.delete(id);
   }
 }

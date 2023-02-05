@@ -7,8 +7,7 @@ import {
   Param,
   Delete,
   Logger,
-  HttpException,
-  HttpStatus,
+  InternalServerErrorException
 } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -27,10 +26,10 @@ export class CompaniesController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 
@@ -41,10 +40,10 @@ export class CompaniesController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 
@@ -55,10 +54,10 @@ export class CompaniesController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 
@@ -69,10 +68,10 @@ export class CompaniesController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 
@@ -86,10 +85,10 @@ export class CompaniesController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 
@@ -100,10 +99,10 @@ export class CompaniesController {
       return result;
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 }

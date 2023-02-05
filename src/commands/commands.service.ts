@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { Station } from '../stations/entities/station.entity';
 import { TreeDataDto } from './dto/tree-data.dto';
 import { StepDto } from './dto/step.dto';
 import { CompanyReportDto } from './dto/company-report.dto';
+import { ReportDto } from './dto/report.dto';
 
 @Injectable()
 export class CommandsService {
@@ -13,11 +14,11 @@ export class CommandsService {
     private stationRepository: Repository<Station>,
   ) {}
 
-  async startStation(id: number) {
+  async startStation(id: number): Promise<UpdateResult> {
     return await this.stationRepository.update(id, { isCharging: true });
   }
 
-  async startStationsAll() {
+  async startStationsAll(): Promise<UpdateResult> {
     return await this.stationRepository
       .createQueryBuilder()
       .update(Station)
@@ -25,20 +26,20 @@ export class CommandsService {
       .execute();
   }
 
-  async stopStation(id: number) {
+  async stopStation(id: number): Promise<UpdateResult> {
     return await this.stationRepository.update(id, { isCharging: false });
   }
 
-  async stopStationsAll() {
-    return await this.stationRepository
+  stopStationsAll(): Promise<UpdateResult> {
+    return this.stationRepository
       .createQueryBuilder()
       .update(Station)
       .set({ isCharging: false })
       .execute();
   }
 
-  async chargingReport(): Promise<TreeDataDto[]> {
-    return await this.stationRepository.query(
+  chargingReport(): Promise<TreeDataDto[]> {
+    return this.stationRepository.query(
       `WITH RECURSIVE descendants(id, parentId, descendantId) AS (
         SELECT id, parentId, id as descendantId FROM company
         UNION ALL
@@ -51,7 +52,7 @@ export class CommandsService {
     );
   }
 
-  async validateBody(raw: Buffer) {
+  async validateBody(raw: Buffer): Promise<string[]>{
     const text = raw.toString().trim();
     const cmds = text.split(/[\r\n]+/).map(function (item) {
       return item.trim();
@@ -108,7 +109,7 @@ export class CommandsService {
     return step;
   }
 
-  async processCommands(cmds: string[]) {
+  async processCommands(cmds: string[]): Promise<ReportDto> {
     const begin = /Begin/;
     const end = /End/;
     const start = /Start station ([1-9][0-9]*|all)/;

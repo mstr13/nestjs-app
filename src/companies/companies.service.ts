@@ -12,16 +12,16 @@ export class CompaniesService {
     private companyRepository: Repository<Company>,
   ) {}
 
-  async create(createCompanyDto: CreateCompanyDto) {
-    return await this.companyRepository.save(createCompanyDto);
+  create(createCompanyDto: CreateCompanyDto) {
+    return this.companyRepository.save(createCompanyDto);
   }
 
-  async findAll() {
-    return await this.companyRepository.find();
+  findAll() {
+    return this.companyRepository.find();
   }
 
-  async findStations(id: number) {
-    return await this.companyRepository.query(
+  findStations(id: number) {
+    return this.companyRepository.query(
       `WITH RECURSIVE childs(id) AS (
         VALUES(?) 
         UNION 
@@ -34,8 +34,8 @@ export class CompaniesService {
     );
   }
 
-  async findOne(id: number) {
-    return await this.companyRepository.findOneBy({ id: id });
+  findOne(id: number) {
+    return this.companyRepository.findOneBy({ id: id });
   }
 
   async update(id: number, updateCompanyDto: UpdateCompanyDto) {

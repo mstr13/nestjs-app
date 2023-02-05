@@ -2,9 +2,9 @@ import {
   Controller,
   Post,
   Logger,
-  HttpException,
-  HttpStatus,
   Req,
+  InternalServerErrorException,
+  BadRequestException,
 } from '@nestjs/common';
 import * as rawbody from 'raw-body';
 import { CommandsService } from './commands.service';
@@ -25,17 +25,17 @@ export class CommandsController {
         return result;
       } else {
         this.logger.log('Plain text raw body not found in request');
-        throw new HttpException(
-          'Internal Server Error',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
+        throw new BadRequestException('Bad Request', {
+          cause: new Error(),
+          description: 'Plain text raw body not found in request',
+        });
       }
     } catch (error) {
       this.logger.log(error.message);
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException('Internal Server Error', {
+        cause: new Error(),
+        description: error.message,
+      });
     }
   }
 }
