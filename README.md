@@ -33,7 +33,8 @@ stationName, maxPower) about all stations that belong to the given company and i
 
 ## ToDo (Sorry for the lack of time)
 
-- Implement testing.
+- Unit, Integration and E2E testing
+- Improve documentation
 
 
 ## License
